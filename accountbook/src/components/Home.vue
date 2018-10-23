@@ -17,111 +17,114 @@
         <button class="btn" @click="clearTotal()">Clear</button>
       </div>
 
-      <div class="listBtnArea">
-        <button class="listBtn" @click="showList()">Consumption List</button>
-      </div>
+      <router-link to="/List">
+        <div class="listBtnArea">
+            <button class="listBtn">Consumption List</button>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "home",
-    data () {
-      return {
-        total: 0,
-        price: 10000,
-        comment: 'food',
+export default {
+  name: "home",
+  data () {
+    return {
+      total: 0,
+      price: 10000,
+      comment: 'food',
 
-        book: null, // Json Type book which includes words.
-      }
-    },
-    created() {
-      this.initLocalstorage();
-      // localStorage.clear();
-    },
-    computed: {
-
-    },
-    methods: {
-      /********************* localstorage  *********************/
-      initLocalstorage() {
-        // book
-        if(localStorage.getItem('book')) {
-          this.book = Object.values(JSON.parse(localStorage.getItem('book')));
-          console.log('--------------Bring book from localstorage.--------------');
-        } else {
-          this.book = new Array();
-          localStorage.setItem('book', JSON.stringify(this.book));
-          console.log('--------------Make new book.--------------');
-        }
-
-        // total
-        if(localStorage.getItem('total')) {
-          this.total = JSON.parse(localStorage.getItem('total'));
-          console.log('--------------Bring total from localstorage.--------------');
-        } else {
-          this.total = 0;
-          localStorage.setItem('total', JSON.stringify(this.total));
-          console.log('--------------Make new total.--------------');
-        }
-      },
-
-      refreshLocalstorage() {
-        localStorage.setItem('total', JSON.stringify(this.total));
-        localStorage.setItem('book', JSON.stringify(this.book));
-
-        console.log('refresh localstorage.');
-      },
-
-
-      /********************* calculator function  *********************/
-      addToTotal(price, comment) {
-        if(this.price > 0) {
-          const d = new Date();
-          this.total = this.total + price;
-          this.book.push({
-            'type': 'add',
-            'year': d.getFullYear(), 'month': d.getMonth(), 'date': d.getDate(),
-            'price': price, 'comment': comment
-          });
-          this.refreshLocalstorage();
-        }
-        this.refreshInputForm();
-      },
-
-      minusToTotal(price, comment) {
-        if(this.price > 0) {
-          const d = new Date();
-          this.total = this.total - price;
-          this.book.push({
-            'type': 'minus', 'year': d.getFullYear(), 'month': d.getMonth() + 1 , 'date': d.getDate(),
-            'price': price, 'comment': comment
-          });
-          this.refreshLocalstorage();
-        }
-        this.refreshInputForm();
-      },
-
-      showList() {
-        let msg = '';
-
-        this.book.forEach(function print(x) {
-          msg += (x.year + '/' + x.month + '/' + x.date + '_' + x.price + '_' + x.comment + '_[' + x.type + ']' + '\n');
-        });
-        alert(msg);
-      },
-
-      clearTotal() {
-        this.total = 0;
-      },
-
-      refreshInputForm() {
-        this.price = null;
-        this.comment = null;
-      }
+      book: null, // Json Type book which includes words.
     }
+  },
+  created() {
+    this.initLocalstorage();
+    // localStorage.clear();
+  },
+  computed: {
+
+  },
+  methods: {
+    /********************* localstorage  *********************/
+    initLocalstorage() {
+      // book
+      if(localStorage.getItem('book')) {
+        this.book = Object.values(JSON.parse(localStorage.getItem('book')));
+        console.log('--------------Bring book from localstorage.--------------');
+      } else {
+        this.book = new Array();
+        localStorage.setItem('book', JSON.stringify(this.book));
+        console.log('--------------Make new book.--------------');
+      }
+
+      // total
+      if(localStorage.getItem('total')) {
+        this.total = JSON.parse(localStorage.getItem('total'));
+        console.log('--------------Bring total from localstorage.--------------');
+      } else {
+        this.total = 0;
+        localStorage.setItem('total', JSON.stringify(this.total));
+        console.log('--------------Make new total.--------------');
+      }
+    },
+
+    refreshLocalstorage() {
+      localStorage.setItem('total', JSON.stringify(this.total));
+      localStorage.setItem('book', JSON.stringify(this.book));
+
+      console.log('refresh localstorage.');
+    },
+
+
+    /********************* calculator function  *********************/
+    addToTotal(price, comment) {
+      if(this.price > 0) {
+        const d = new Date();
+        this.total = this.total + price;
+        this.book.push({
+          'type': 'add',
+          'year': d.getFullYear(), 'month': d.getMonth() + 1, 'date': d.getDate(),
+          'price': price, 'comment': comment
+        });
+        this.refreshLocalstorage();
+      }
+      this.refreshInputForm();
+    },
+
+    minusToTotal(price, comment) {
+      if(this.price > 0) {
+        const d = new Date();
+        this.total = this.total - price;
+        this.book.push({
+          'type': 'minus', 'year': d.getFullYear(), 'month': d.getMonth() + 1 , 'date': d.getDate(),
+          'price': price, 'comment': comment
+        });
+        this.refreshLocalstorage();
+      }
+      this.refreshInputForm();
+    },
+
+    clearTotal() {
+      this.total = 0;
+    },
+
+    refreshInputForm() {
+      this.price = null;
+      this.comment = null;
+    },
+
+    /********************* calculator function  *********************/
+    showList() {
+      let msg = '';
+
+      this.book.forEach(function print(x) {
+        msg += (x.year + '/' + x.month + '/' + x.date + '_' + x.price + '_' + x.comment + '_[' + x.type + ']' + '\n');
+      });
+      alert(msg);
+    },
   }
+}
 </script>
 
 <style lang="scss" scoped>
