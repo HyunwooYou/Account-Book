@@ -1,20 +1,14 @@
 <template>
   <div class="container">
-    <my-header></my-header>
     <transition name="component-fade" mode="out-in">
-      <router-view></router-view>
-
-      <!--<component :is="view"></component>-->
+      <router-view :total="total" :book="book"></router-view>
     </transition>
-    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
-import MyHeader from './components/MyHeader'
 import Home from './components/Home'
 import List from './components/List'
-import MyFooter from './components/MyFooter'
 
 import eventBus from './eventBus'
 import VueRouter from 'vue-router'
@@ -29,28 +23,78 @@ const router = new VueRouter({
 export default {
   name: 'app',
   router,
+  components: { Home, List },
   data() {
     return {
-      view: 'Home'
+      total: 0,
+      book: null // Json Type book which includes words.
     }
   },
-  components: {
-    MyHeader, Home, List, MyFooter
-  },
   created() {
-    eventBus.$on('changeView', (view) => { this.view = view })
+    this.$router.push('/'); // index page
+    this.initLocalStorage();
+
+    eventBus.$on('pushToBook', (obj) => { this.book.push(obj) });
+    eventBus.$on('addTotal', (value) => { this.total += value });
+    eventBus.$on('subTotal', (value) => { this.total -= value });
+    eventBus.$on('showList', () => { this.showList() });
+    eventBus.$on('refreshLocalStorage', () => { this.refreshLocalStorage() });
+  },
+  methods: {
+    /** * * * * * * * * * * * * * * * localstorage  * * * * * * * * * * * * * * * **/
+    initLocalStorage() {
+      if(localStorage.getItem('book')) {
+        this.book = Object.values(JSON.parse(localStorage.getItem('book')));
+        console.log('-------------- Bring Book --------------');
+      } else {
+        this.book = new Array();
+        localStorage.setItem('book', JSON.stringify(this.book));
+        console.log('--------------- New Book ---------------');
+      }
+
+      // total
+      if(localStorage.getItem('total')) {
+        this.total = JSON.parse(localStorage.getItem('total'));
+        console.log('-------------- Bring total --------------');
+      } else {
+        this.total = 0;
+        localStorage.setItem('total', JSON.stringify(this.total));
+        console.log('--------------- New Total.---------------');
+      }
+    },
+
+    refreshLocalStorage() {
+      localStorage.setItem('total', JSON.stringify(this.total));
+      localStorage.setItem('book', JSON.stringify(this.book));
+      console.log('refresh localStorage.');
+    },
+
+    showList() {
+      let msg = '';
+
+      this.book.forEach(function print(x) {
+        msg += (x.year + '/' + x.month + '/' + x.date + '_' + x.price + '_' + x.comment + '_[' + x.type + ']' + '\n');
+      });
+      console.log(msg);
+    },
   }
 }
 </script>
 
 <style lang="scss">
-  .container {
-    margin: auto;
-    font-size: 60px;
-    font-weight: bold;
+  html {
+    background-image: url("assets/img/background.jpg") ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1100px 2100px;
+    min-height: -webkit-fill-available;
+    position: fixed;
+    top: 0;
   }
 
-  body { margin: 0; padding: 0; }
+  body {
+    margin: 0; padding: 0;
+  }
 
   .show {
     border: 1px solid black;

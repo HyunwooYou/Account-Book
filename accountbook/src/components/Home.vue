@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img class="logo" src="../assets/img/github-octocat.png">
+    <img class="logo" src="../assets/img/rabbit.gif">
     <div class="content">
       <div class="totalArea">
         {{ total }}
@@ -14,12 +14,11 @@
       <div class="btnArea">
         <button class="btn" @click="addToTotal(price, comment)">ADD</button>
         <button class="btn" @click="minusToTotal(price, comment)">Minus</button>
-        <button class="btn" @click="clearTotal()">Clear</button>
       </div>
 
       <router-link to="/List">
         <div class="listBtnArea">
-            <button class="listBtn">Consumption List</button>
+            <button class="listBtn">Show List</button>
         </div>
       </router-link>
     </div>
@@ -27,67 +26,26 @@
 </template>
 
 <script>
+import eventBus from '../eventBus'
+
 export default {
   name: "home",
   data () {
-    return {
-      total: 0,
-      price: 10000,
-      comment: 'food',
-
-      book: null, // Json Type book which includes words.
-    }
+    return { price: 10000, comment: 'food' }
   },
-  created() {
-    this.initLocalstorage();
-    // localStorage.clear();
-  },
-  computed: {
-
-  },
+  props: [ 'total' ],
   methods: {
-    /********************* localstorage  *********************/
-    initLocalstorage() {
-      // book
-      if(localStorage.getItem('book')) {
-        this.book = Object.values(JSON.parse(localStorage.getItem('book')));
-        console.log('--------------Bring book from localstorage.--------------');
-      } else {
-        this.book = new Array();
-        localStorage.setItem('book', JSON.stringify(this.book));
-        console.log('--------------Make new book.--------------');
-      }
-
-      // total
-      if(localStorage.getItem('total')) {
-        this.total = JSON.parse(localStorage.getItem('total'));
-        console.log('--------------Bring total from localstorage.--------------');
-      } else {
-        this.total = 0;
-        localStorage.setItem('total', JSON.stringify(this.total));
-        console.log('--------------Make new total.--------------');
-      }
-    },
-
-    refreshLocalstorage() {
-      localStorage.setItem('total', JSON.stringify(this.total));
-      localStorage.setItem('book', JSON.stringify(this.book));
-
-      console.log('refresh localstorage.');
-    },
-
-
-    /********************* calculator function  *********************/
     addToTotal(price, comment) {
       if(this.price > 0) {
         const d = new Date();
-        this.total = this.total + price;
-        this.book.push({
+
+        eventBus.$emit('addTotal', price);
+        eventBus.$emit('pushToBook', {
           'type': 'add',
           'year': d.getFullYear(), 'month': d.getMonth() + 1, 'date': d.getDate(),
           'price': price, 'comment': comment
         });
-        this.refreshLocalstorage();
+        eventBus.$emit('refreshLocalStorage');
       }
       this.refreshInputForm();
     },
@@ -95,34 +53,18 @@ export default {
     minusToTotal(price, comment) {
       if(this.price > 0) {
         const d = new Date();
-        this.total = this.total - price;
-        this.book.push({
+
+        eventBus.$emit('subTotal', price);
+        eventBus.$emit('pushToBook', {
           'type': 'minus', 'year': d.getFullYear(), 'month': d.getMonth() + 1 , 'date': d.getDate(),
           'price': price, 'comment': comment
         });
-        this.refreshLocalstorage();
+        eventBus.$emit('refreshLocalStorage');
       }
       this.refreshInputForm();
     },
 
-    clearTotal() {
-      this.total = 0;
-    },
-
-    refreshInputForm() {
-      this.price = null;
-      this.comment = null;
-    },
-
-    /********************* calculator function  *********************/
-    showList() {
-      let msg = '';
-
-      this.book.forEach(function print(x) {
-        msg += (x.year + '/' + x.month + '/' + x.date + '_' + x.price + '_' + x.comment + '_[' + x.type + ']' + '\n');
-      });
-      alert(msg);
-    },
+    refreshInputForm() { this.price = null; this.comment = null; },
   }
 }
 </script>
@@ -131,35 +73,40 @@ export default {
   .home {
     text-align: center;
     color: #2c3e50;
-    margin: 60px 0;
+    margin: 200px 60px 0 60px;
+    font-weight: bold;
 
-    .logo { width: 90%; height: 450px; }
+    .logo {
+      width: 30%;
+      height: 300px;
+      margin-top: 50px;
+    }
 
     .content {
       margin: 0 auto;
-      width: 50%;
 
       .totalArea {
         font-size: 140px;
         text-align: center;
-        overflow: scroll;
       }
 
       .inputArea {
         margin: 40px auto;
+        width: 70%;
 
         .price {
           width: 70%;
           font-size: 60px;
-          outline-color: lightgreen;
+          outline-color: white;
           border-radius: 12px;
           border: 5px solid #2c3e50;
         }
 
         .desc {
+          margin-top: 30px;
           width: 70%;
           font-size: 60px;
-          outline-color: lightgreen;
+          outline-color: white;
           border-radius: 12px;
           border: 5px solid #2c3e50;
         }
@@ -167,11 +114,11 @@ export default {
 
       .btnArea {
         .btn {
-          width: 140px;
-          margin-right: 5px;
-          padding: 16px;
-          font-size: 32px;
-          background-color: seagreen;
+          min-width: 150px;
+          margin-right: 10px;
+          padding: 20px;
+          font-size: 40px;
+          background-color: palevioletred;
           color: white;
           font-weight: bold;
           border-radius: 12px;
@@ -182,14 +129,13 @@ export default {
         margin: 50px 0;
 
         .listBtn {
-          width: 100%;
-          margin-right: 5px;
+          width: 50%;
           padding: 16px;
           font-size: 46px;
-          background-color: mediumseagreen;
+          background-color: mediumvioletred;
           color: white;
           font-weight: bold;
-          border-radius: 12px;
+          border-radius: 20px;
         }
       }
     }
