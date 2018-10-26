@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import Home from './components/Home'
-import List from './components/List'
+import Home from './components/Home.vue'
+import List from './components/List.vue'
 
-import eventBus from './eventBus'
+import eventBus from './eventBus.js'
 import VueRouter from 'vue-router'
 
 const router = new VueRouter({
@@ -39,7 +39,7 @@ export default {
     eventBus.$on('pushToBook', (obj) => { this.book.push(obj) });
     eventBus.$on('addTotal', (value) => { this.total += value });
     eventBus.$on('subTotal', (value) => { this.total -= value });
-    eventBus.$on('showList', () => { this.showList() });
+    // eventBus.$on('showList', () => { this.showList() });
     eventBus.$on('refreshLocalStorage', () => { this.refreshLocalStorage() });
   },
   methods: {
@@ -78,10 +78,12 @@ export default {
     background-image: url("assets/img/background.jpg") ;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 1030px 1950px;
-    min-height: -webkit-fill-available;
+    background-size: 1000px 2000px;
+    min-height: 1800px;
     position: fixed;
     top: 0;
+    bottom: 0;
+    overflow: hidden;
   }
 
   body { margin: 0; padding: 0; }

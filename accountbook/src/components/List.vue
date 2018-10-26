@@ -12,29 +12,25 @@
             <th class="time">time</th>
             <th class="price">Price</th>
             <th class="usage">Usage</th>
-            <!--<th class="type">T</th>-->
           </tr>
         </thead>
 
         <tbody>
           <tr v-for="item in list.slice(first, second).reverse()">
-            <td>{{ item.month }}/{{ item.date }}</td>
+            <td>{{ item.month }}&#47;{{ item.date }}</td>
 
             <td v-if="item.type == 'add'" class="add">&#43;{{ item.price }}</td>
             <td v-else class="minus">&#45; {{ item.price }}</td>
 
             <td>{{ item.comment }}</td>
-            <!--<td>{{ item.type }}</td>-->
           </tr>
         </tbody>
       </table>
-      <!--<button class="listBtn" @click="showList()">Show List</button>-->
     </div>
 </template>
 
 <script>
 import VueRouter from 'vue-router'
-import eventBus from '../eventBus'
 
 export default {
   name: "list",
@@ -59,24 +55,6 @@ export default {
 
     second() {
       return this.list.length;
-    },
-
-  },
-  methods: {
-    showList() {
-      eventBus.$emit('showList');
-    },
-
-    checked(type) {
-      if(type == 'add') {
-        this.type = this.addDisplay;
-        console.log('!!!');
-      } else {
-        this.type = this.minusDisplay;
-        console.log('???');
-      }
-
-      return ;
     }
   }
 }
