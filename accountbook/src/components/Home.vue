@@ -8,7 +8,7 @@
 
       <div class="inputArea">
         <input class="price" placeholder="price" type="number" v-model.number="price" />
-        <input class="desc" placeholder="comment" type="text" v-model.number="comment" />
+        <input class="desc" placeholder="comment" type="text" v-model.number="comment" maxlength="8" />
       </div>
 
       <div class="btnArea">
@@ -17,10 +17,12 @@
       </div>
 
       <router-link to="/List">
-        <div class="listBtnArea">
-            <button class="listBtn">Show List</button>
+        <div class="longBtnArea">
+            <button class="longBtn">Show List</button>
         </div>
       </router-link>
+
+      <!-- (Todo) Add clear localstorage btn -->
     </div>
   </div>
 </template>
@@ -31,7 +33,7 @@ import eventBus from '../eventBus'
 export default {
   name: "home",
   data () {
-    return { price: 10000, comment: 'food' }
+    return { price: null, comment: null }
   },
   props: [ 'total' ],
   methods: {
@@ -73,7 +75,7 @@ export default {
   .home {
     text-align: center;
     color: #2c3e50;
-    margin: 200px 60px 0 60px;
+    margin: 30px 60px 0 60px;
     font-weight: bold;
 
     .logo {
@@ -125,10 +127,10 @@ export default {
         }
       }
 
-      .listBtnArea {
+      .longBtnArea {
         margin: 50px 0;
 
-        .listBtn {
+        .longBtn {
           width: 50%;
           padding: 16px;
           font-size: 46px;
