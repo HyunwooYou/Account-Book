@@ -132,7 +132,7 @@ export default {
           width: 50%;
           padding: 16px;
           font-size: 46px;
-          background-color: mediumvioletred;
+          background-color: lightcoral;
           color: white;
           font-weight: bold;
           border-radius: 20px;
