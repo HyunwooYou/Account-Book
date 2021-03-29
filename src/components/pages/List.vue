@@ -47,11 +47,22 @@
     },
     computed: {
       getGroupedList() {
-        return this.book.reduce((res, obj) => {
-          const _key = `${obj['year']}_${obj['month']}_${obj['date']}`;
+        const rawObj = this.book.reduce((res, obj) => {
+          const _year = obj['year'] * 10000;
+          const _month = obj['month'] * 100;
+          const _date = obj['date'];
+          const _key = _year + _month + _date;
+
           (res[_key] = res[_key] || []).push(obj);
           return res;
         }, {});
+
+        const orderedObj = {};
+        Object.keys(rawObj).reverse().forEach((index, key) => {
+          orderedObj[key] = rawObj[index];
+        });
+
+        return orderedObj;
       },
       renderDetailInfo() {
         return this.selectedGroup.length !== 0;
@@ -86,8 +97,8 @@
 
     .pinkBtn {
       position: absolute;
-      min-height: 90px;
-      top: 210px;
+      min-height: 80px;
+      top: 215px;
       right: 100px;
       height: 80px;
       padding: 8px;

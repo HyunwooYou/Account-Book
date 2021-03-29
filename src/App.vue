@@ -84,7 +84,7 @@
         localStorage.setItem('total', JSON.stringify(this.total));
         localStorage.setItem('saveMoney', JSON.stringify(this.saveMoney));
         localStorage.setItem('book', JSON.stringify(this.book));
-        this.book = this.book.reverse();
+
         console.log('refresh localStorage.');
       },
 

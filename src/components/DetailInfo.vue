@@ -53,7 +53,8 @@
       overflow-y: auto;
       border-top: 2px solid lightslategray;
       border-bottom: 2px solid lightslategray;
-      padding: 10px 0;
+      padding-top: 10px;
+      padding-bottom: 30px;
 
       .item {
         display: flex;
