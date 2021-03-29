@@ -8,11 +8,11 @@
       <div class="item" v-for="item in selectedGroup" :key="">
         <div v-if="item.type === 'add'" class="green price">
           <label>+</label>
-          <label>{{item.price}}</label>
+          <label>{{_addCommaToStr(item.price)}}</label>
         </div>
         <div v-else class="orange price">
           <label>-</label>
-          <label>{{item.price}}</label>
+          <label>{{_addCommaToStr(item.price)}}</label>
         </div>
 
         <div class="memo">
@@ -61,9 +61,10 @@
 
         .price {
           display: flex;
-          width: 350px;
+          width: 330px;
           text-overflow: ellipsis;
           overflow-x: auto;
+          margin-right: 30px;
         }
 
         .green {

@@ -1,8 +1,15 @@
 <template>
   <div class="container">
-    <hw-header :total="total"/>
+    <hw-header
+      :total="total"
+      :save-money="saveMoney"
+    />
 
-    <router-view :total="total" :book="book"></router-view>
+    <router-view
+      :total="total"
+      :book="book"
+      :save-money="saveMoney"
+    ></router-view>
   </div>
 </template>
 
@@ -19,12 +26,12 @@
     data() {
       return {
         total: 0,
+        saveMoney: 0,
         book: [] // Json Type book which includes words.
       }
     },
     created() {
-      this.$router.push('/').catch(() => {
-      }); // index page
+      this.$router.push('/').catch(() => {}); // index page
       // localStorage.clear();
       this.initLocalStorage();
     },
@@ -33,26 +40,22 @@
         this.book.push(obj);
         this.refreshLocalStorage();
       });
-      EventBus.$on('addTotal', (value) => {
-        this.total += value;
+      EventBus.$on('updateTotal', (value) => {
+        this.total = value;
         this.refreshLocalStorage();
       });
-      EventBus.$on('subTotal', (value) => {
-        this.total -= value;
-        this.refreshLocalStorage();
-      });
-      EventBus.$on('resetTotal', () => {
-        this.total = 0;
+      EventBus.$on('updateSaveMoney', (value) => {
+        this.saveMoney = value;
         this.refreshLocalStorage();
       });
     },
     methods: {
-      /** * * * * * * * * * * * * * * * localstorage  * * * * * * * * * * * * * * * **/
+      /** * * * * * * * * * localstorage  * * * * * * * * * **/
       initLocalStorage() {
         if (localStorage.getItem('book')) {
           this.book = Object.values(JSON.parse(localStorage.getItem('book')));
           // this.book = dmy;
-          // console.log('-------------- Bring Book --------------');
+          console.log('-------------- Bring Book --------------');
         } else {
           this.book = new Array();
           localStorage.setItem('book', JSON.stringify(this.book));
@@ -65,16 +68,26 @@
         } else {
           this.total = 0;
           localStorage.setItem('total', JSON.stringify(this.total));
-          console.log('--------------- New Total.---------------');
+          console.log('--------------- New Total ---------------');
+        }
+
+        if (localStorage.getItem('saveMoney')) {
+          this.saveMoney = JSON.parse(localStorage.getItem('saveMoney'));
+          console.log('-------------- Bring saveMoney --------------');
+        } else {
+          this.saveMoney = 0;
+          localStorage.setItem('saveMoney', JSON.stringify(this.saveMoney));
+          console.log('--------------- New saveMoney ---------------');
         }
       },
-
       refreshLocalStorage() {
         localStorage.setItem('total', JSON.stringify(this.total));
+        localStorage.setItem('saveMoney', JSON.stringify(this.saveMoney));
         localStorage.setItem('book', JSON.stringify(this.book));
         this.book = this.book.reverse();
         console.log('refresh localStorage.');
-      }
+      },
+
     }
   }
 </script>
@@ -117,6 +130,9 @@
     border-radius: 5px;
     padding: 20px;
     border: 3px solid lightgray;
+  }
+  input::placeholder {
+    opacity : 0.7;
   }
 
   a {

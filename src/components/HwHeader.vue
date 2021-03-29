@@ -10,7 +10,7 @@
       </div>
 
       <div class="save">
-        <button class="btn greenBtn">저금통</button>
+        <button class="btn greenBtn" @click="moveToSaveBox()">저금통</button>
 
         <div class="money">
           {{_addCommaToStr(saveMoney)}}
@@ -30,20 +30,25 @@
     mixins: [Mixin],
     props: {
       total: Number,
+      saveMoney: Number,
     },
     data() {
       return {
-        saveMoney: 225000,
         btnText: defaultBtnText,
       }
     },
+    methods: {
+      moveToSaveBox() {
+        this.$router.push('/save');
+      }
+    }
   }
 </script>
 
 <style lang="scss" scoped>
 
   .hwHeader {
-    padding: 0 30px;
+    padding: 0 20px;
     background-color: white;
     border-bottom: 5px solid lightgray;
 
@@ -57,13 +62,13 @@
         display: flex;
 
         .logo {
-          width: 180px;
-          height: 180px;
+          width: 190px;
+          height: 200px;
         }
       }
 
       .total {
-        max-width: 500px;
+        max-width: 550px;
         overflow-x: auto;
         font-size: 120px;
       }

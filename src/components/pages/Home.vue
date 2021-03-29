@@ -7,10 +7,10 @@
           v-model.number="price"
 
         />
+        <!--@keyup.enter="addToTotal(price, comment)"-->
         <input
           class="desc" type="text" maxlength="20"
           :placeholder="`${getCurrentDate} 메모`"
-          @keyup.enter="addToTotal(price, comment)"
           v-model="comment"
         />
       </div>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  import EventBus from '../EventBus'
+  import EventBus from '../../EventBus'
 
   export default {
     name: 'home',
@@ -70,8 +70,7 @@
     },
     watch: {
       price(prevVal, newVal) {
-        if (newVal > 999999) {
-          console.log(prevVal);
+        if (prevVal > 999999) {
           this.price = '';
         }
       }
@@ -81,7 +80,7 @@
         if (this.price > 0) {
           const d = new Date();
 
-          EventBus.$emit('addTotal', price);
+          EventBus.$emit('updateTotal', (this.total + price));
           EventBus.$emit('pushToBook', {
             type: 'add',
             year: d.getFullYear(), 'month': d.getMonth() + 1, 'date': d.getDate(),
@@ -95,7 +94,7 @@
         if (this.price > 0) {
           const d = new Date();
 
-          EventBus.$emit('subTotal', price);
+          EventBus.$emit('updateTotal', (this.total - price));
           EventBus.$emit('pushToBook', {
             type: 'minus',
             year: d.getFullYear(),
@@ -109,7 +108,7 @@
       },
       resetTotal() {
         if (this.toggle) {
-          EventBus.$emit('resetTotal');
+          EventBus.$emit('updateTotal', 0);
         } else {
           setTimeout(() => this.toggle = false, 1000);
         }

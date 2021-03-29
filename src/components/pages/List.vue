@@ -26,8 +26,8 @@
 </template>
 
 <script>
-  import CardInfo from './CardInfo.vue';
-  import DetailInfo from './DetailInfo.vue';
+  import CardInfo from '../CardInfo.vue';
+  import DetailInfo from '../DetailInfo.vue';
 
   export default {
     name: 'list',
