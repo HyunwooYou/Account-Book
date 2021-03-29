@@ -5,7 +5,7 @@
     </div>
 
     <div class="list">
-      <div class="item" v-for="item in selectedGroup" :key="">
+      <div class="item" v-for="item in getReversedArray" :key="">
         <div v-if="item.type === 'add'" class="green price">
           <label>+</label>
           <label>{{_addCommaToStr(item.price)}}</label>
@@ -35,6 +35,11 @@
         default: () => []
       }
     },
+    computed: {
+      getReversedArray() {
+        return this.selectedGroup.reverse();
+      }
+    }
   }
 </script>
 
@@ -42,6 +47,7 @@
 
   .detailInfo {
     width: 88%;
+    margin-top: 20px;
 
     .date {
       font-size: 50px;
@@ -49,7 +55,7 @@
 
     .list {
       height: 515px;
-      margin-top: 20px;
+      margin-top: 30px;
       overflow-y: auto;
       border-top: 2px solid lightslategray;
       border-bottom: 2px solid lightslategray;
@@ -62,10 +68,11 @@
 
         .price {
           display: flex;
-          width: 330px;
+          width: 310px;
           text-overflow: ellipsis;
           overflow-x: auto;
           margin-right: 30px;
+          padding-left: 20px;
         }
 
         .green {
