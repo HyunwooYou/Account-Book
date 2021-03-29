@@ -86,7 +86,8 @@
 
     .pinkBtn {
       position: absolute;
-      top: 220px;
+      min-height: 90px;
+      top: 210px;
       right: 100px;
       height: 80px;
       padding: 8px;

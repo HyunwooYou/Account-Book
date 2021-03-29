@@ -155,7 +155,7 @@
       }
 
       .additionalBtn {
-        margin-top: 60px;
+        margin-top: 50px;
         display: flex;
         justify-content: space-between;
 

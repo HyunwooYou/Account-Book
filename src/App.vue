@@ -116,6 +116,7 @@
 
   button {
     min-width: 150px;
+    min-height: 120px;
     padding: 20px;
     font-size: 40px;
     border: none;
