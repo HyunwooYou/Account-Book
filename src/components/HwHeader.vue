@@ -81,6 +81,7 @@
 
         .btn {
           min-width: 150px;
+          min-height: 100px;
           padding: 8px;
         }
 
