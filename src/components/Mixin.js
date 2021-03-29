@@ -4,7 +4,8 @@ const Mixin = {
       if (number === 0) {
         return '0';
       }
-      const result = number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      const result = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // const result = '';
       const len = result.length;
 
       if (result[len - 1] === ',') {
