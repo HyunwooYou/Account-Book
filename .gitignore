@@ -10,5 +10,7 @@ yarn-error.log
 *.njsproj
 *.sln
 
+.xml
+
 # vue
 package-lock.json

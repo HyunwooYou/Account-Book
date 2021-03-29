@@ -18,7 +18,7 @@
       <card-info
         v-for="group in getGroupedList"
         @click-card="clickCardHandler"
-        :key="group.index"
+        :key="`${group[0].year}_${group[0].month}_${group[0].date}`"
         :detail-info="group"
       />
     </div>
