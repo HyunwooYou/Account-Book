@@ -35,12 +35,6 @@
         >
           추가
         </button>
-        <button
-          class="btn greenBtn"
-          @click="resetTotal()"
-        >
-          {{toggle ? '계속 진행..' : '초기화'}}
-        </button>
       </div>
     </div>
   </div>
@@ -110,7 +104,7 @@
         if (this.toggle) {
           EventBus.$emit('updateTotal', 0);
         } else {
-          setTimeout(() => this.toggle = false, 1000);
+          setTimeout(() => this.toggle = false, 2000);
         }
         this.toggle = !(this.toggle);
       },
@@ -155,12 +149,12 @@
       }
 
       .additionalBtn {
-        margin-top: 50px;
+        margin-top: 40px;
         display: flex;
         justify-content: space-between;
 
         button {
-          width: 285px;
+          width: 100%;
         }
       }
     }

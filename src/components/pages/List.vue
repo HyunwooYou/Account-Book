@@ -1,11 +1,11 @@
 <template>
   <div class="list">
     <button
-      class="pinkBtn"
+      class="greenBtn"
       v-if="renderDetailInfo"
       @click="closeDetailInfo()"
     >
-      닫기
+      ^
     </button>
 
     <detail-info
@@ -95,13 +95,15 @@
     padding: 20px 50px 50px 50px;
     font-size: 40px;
 
-    .pinkBtn {
+    .greenBtn {
       position: absolute;
+      min-width: 90px;
       min-height: 80px;
-      top: 240px;
+      top: 800px;
       right: 100px;
       height: 80px;
       padding: 8px;
+      font-size: 80px;
     }
 
     .btnArea {
@@ -110,7 +112,7 @@
     }
 
     .cardTable {
-      margin-top: 20px;
+      margin-top: 35px;
       padding-left: 30px;
       height: 1235px;
       display: flex;

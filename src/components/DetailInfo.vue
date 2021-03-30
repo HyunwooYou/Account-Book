@@ -54,10 +54,10 @@
     }
 
     .list {
-      height: 515px;
+      height: 455px;
       margin-top: 30px;
       overflow-y: auto;
-      border-top: 2px solid lightslategray;
+      border-top: 4px solid lightslategray;
       border-bottom: 2px solid lightslategray;
       padding-top: 10px;
       padding-bottom: 30px;

@@ -48,7 +48,7 @@
 <style lang="scss" scoped>
 
   .hwHeader {
-    padding: 0 20px;
+    padding-right: 35px;
     background-color: white;
     border-bottom: 5px solid lightgray;
 
