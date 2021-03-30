@@ -97,9 +97,9 @@
 
     .greenBtn {
       position: absolute;
-      min-width: 90px;
+      min-width: 100px;
       min-height: 80px;
-      top: 800px;
+      top: 765px;
       right: 100px;
       height: 80px;
       padding: 8px;

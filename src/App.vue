@@ -16,7 +16,7 @@
 <script>
   import EventBus from './EventBus.js'
   import HwHeader from './components/HwHeader.vue';
-  import dmy from './dmy';
+  // import dmy from './dmy';
 
   export default {
     name: 'app',
